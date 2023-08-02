@@ -1,0 +1,105 @@
+def show(v):
+    for i in range(len(v)-1,-1,-1):
+        print(v[i],end=" ")
+
+
+def count(num):
+    vs_digits = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"]
+    vs_digit_plus = ["Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighting",
+                     "Nineteen"]
+    vs_tens = ["Zero", "Ten", "Twenty", "Thirty", "Fourty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninty"]
+    vs_multi = ["Hundred", "Thousand", "Lakh", "Crore", "Arab", "Kharab"]
+
+    idx = 0
+    a = ""
+    b = ""
+    c = ""
+    d = ""
+    e = " "
+    f = "and"
+    final = ""
+
+    remainder = int(num % 100)
+
+    v = []
+
+    if 0 < remainder < 10:
+        a = vs_digits[remainder - 1]
+
+    elif 10 < remainder < 20:
+        remainder = remainder % 10
+        a = vs_digit_plus[remainder - 1]
+
+    elif remainder % 10 == 0:
+        a = vs_tens[int(remainder / 10)]
+
+    elif 20 < remainder < 100:
+        num1 = int(remainder / 10)
+        num2 = int(remainder % 10)
+        b = vs_tens[num1]
+        c = vs_digits[num2 - 1]
+
+    final = a + b + e + c + e
+    v.append(final)
+    a = ""
+    b = ""
+    c = ""
+    d = ""
+    e = " "
+    num = int(num / 100)
+    if num == 0:
+        show(v)
+        return
+
+    remainder = int(num % 10)
+    a = vs_digits[remainder - 1]
+    d = vs_multi[idx]
+    final = a + e + d + e + f
+    v.append(final)
+    idx=idx+1
+    num = int(num / 10)
+    a = ""
+    b = ""
+    c = ""
+    d = ""
+    e = " "
+    final = ""
+
+    if num == 0:
+        show(v)
+        return
+
+    while num > 0:
+        remainder = int(num % 100)
+
+        if num < 10:
+            remainder = num
+        if 0 < remainder < 10:
+            a = vs_digits[int(remainder) - 1]
+        elif 10 < remainder < 20:
+            remainder = remainder % 10
+            a = vs_digit_plus[int(remainder) - 1]
+        elif remainder % 10 == 0:
+            rem=int(remainder/10)
+            a = vs_tens[rem]
+        elif 20 < remainder < 100:
+            num1 = int(remainder / 10)
+            num2 = int(remainder % 10)
+            b = vs_tens[num1]
+            c = vs_digits[num2 - 1]
+        d = vs_multi[idx]
+        final = a + b + e + c + e + d + e
+        v.append(final)
+        num = int(num / 100)
+        idx=idx+1
+        a = ""
+        b = ""
+        c = ""
+        d = ""
+        final = ""
+
+    show(v)
+    return
+
+ask=int(input("Enter integer:"))
+count(ask)
